@@ -1,0 +1,113 @@
+Komut gets ile bir string arrayin içine alınır.
+Bu string arrayin ilk kelimesi boşluğa göre parçalanır.
+İlk kelime yapılacak komut olduğu için kontrol edilerek ona ait part fonksiyonuna komut arrayi gönderilir.
+
+	PART_INSERT
+
+Gelen array field_number fonksiyonuna gönderilir.
+Burada eklenilecek bilgilerin sayisi elde edilir.
+Bu sayi ile iki boyutlu dynamic array oluşturulur.
+Teker teker bilgiler bu arraye yerleştirilir.
+En son table ismine göre bu bilgiler insert fonksiyonlarından birine gönderilir.
+
+	INSERT_(TABLE)
+
+Hangi tablonun fonksyionundaysak o tablonun elemanlarının size'ı bulmak için
+	num_file_elem fonksyionu çağırılır bize dosyanın içindeki eleman sayisini return eder.
+read_(table) fonksyionları ile size kadar okuma yapılarak dosyadaki elemanlar strcut arrayinde turulur.
+Fonksyiona input olarak gelen bilgiler ile bu struct arrayin içindeki unique columnlar karşılaştırılır.
+Eğer bilgi daha önce kaydedildiyse hata mesajı verilir.
+Eğer yoksa,oluşturulan struct tipinde bir değişkene gelen bilgiler assign edilir.
+Dosya ab+ access modunda açılarak yazma işlemi gerçekleşir.
+
+
+
+	PART DELETE
+
+İlk yapılan islem search_where_sort fonksiyonu calistirarak silinme kosulu alinir.
+Gelen command arrayi tablo ismine kadar gecilir.
+Tablo ismi alindiktan sonra tablo ismine göre dosya boyutu ve dosyadaki elemanlar alinarak 
+	tablo ismine ait delete fonksyionuna wherekosulu,dosyadaki eleman sayisi ve 
+		dosyadaki eleman sayisinin tutuldugu struct arrayi gonderilir.
+
+
+	DELETE(TABLE)
+
+wEger maine arguman geldiyse kosul arrayin 1. ve 2. elemanı all oldugu icin hepsi silinecektir.
+Maine arguman gelmediyse kosul arrayinin ilk elemani field oldugundan ilk once fieldin hangisi oldugu belirlenir.
+Daha sonra kosul arrayinin 2. elemani degistirilecek degeri tuttugundan buna esit bir deger varsa 
+	struct arrayinin field deglerini belirledigim (Stringler icin >> XOX--XOX sayilar icin >> -9999)
+		degerlerle degistirir.
+İslem bittiginde dosya "wb" access modunda acilarak struct arrayi dosyaya yazilir.
+
+
+	PART UPDATE
+
+Ilk olarka virgul sayisina bakilarak guncellenecek column sayisini field_number fonksyionu ile alınır.
+Daha sonra search_where_sort fonksiyonu calistirarak guncelleme kosulu alinir.
+Komut "in" kelimesine kadar parçalanarak guncellenecek bilgiler 2 boyutlu dynamic arraye atilir.
+Komuttaki tablo ismine göre dosyadaki eleman sayisi ve dosyadaki elemanlar struct arrayi ile alinir.
+Tablo ismine ait update fonksiyonuna guncellenecek field bilgileri,where kosulu,struct arrayi,guncellenecek field sayisi
+	where kosul sayisi ve dosyadaki eleman sayisi(strcut array size) bilgileri gonderilir.
+
+
+	UPDATE(TABLE)
+
+İlk islem where kosulunun hangi field oldugunu belirlemektir.(w_field[0])
+Daha sonra her eleman icin w_field[1] deki deger olup olmadigina bakilir.
+Eger varsa guncellenecek field sayisi kadar bir donguye girerek guncellenecek field ve degerler esitlenerek
+	struct arrayinde duzenleme yapilir.
+Daha sonra dosya "wb" access modunda açılarak dosyaya strcut arrayi yazılır.
+
+
+	PART_SELECT
+
+Gelen komut arrayinde ilk once gosterilecek field sayisi belirlenir.(field_numbur fonk)
+Daha sonra selectin hangi turu oldugunu belirlemek icin search_where_sort fonksiyonuna komut arrayi gonderilir.
+Buradan 3 secenek cikmakta;
+			return 1:Komut selectin where versiyonu
+			return 2:Komut selectin sort versiyonu
+			return 0:Sade select komutu
+Bu return degerlerine gore fonksiyonlar dallanir.
+
+return 0 icin;
+	0 degeri geldiyse,gosterilecek fieldlari almak icin break_select fonksyinonuna field_num ve komut arrayi gider.
+	return degeri olarak select_fields gelince team tablosuna gore select_fields ve num degeri select_table) fonksiyonlarina gonderilir.
+	Orada show_(table) fonksiyonları ile select_field'a gore dosyadan veri okunup ekrana yazilir.
+
+return 1 icin;
+	1 degeri geldiyse gosterilecek fieldlar ve field_num alinir ve ayrıca break_where fonskyionu ile where degeleri array olarak alinir.
+	Daha sonra where_(table) fonksiyonuna tablo ismine gore bu bilgiler gonderilir.
+	Burada Dosya okunur ve where kosulundaki column degeri ile esit degerlerin select_fieldlarini gosterir.
+
+return 2 icin;
+	1 degeri geldiyse gosterilecek fieldlar ve field_num alinir ve break_sort fonskyionu ile sort bilgileri array olarak alinir.(asc=1,desc=2)
+	tablo ismine gore sorted fonksiyonlarina bu bilgiler gonderilir.
+	Dosya okunur struct arrayi siralanacak column degerine ve asc ve desc sartlarina bakarak siralanir ve print edilir.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
