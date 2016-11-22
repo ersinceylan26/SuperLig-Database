@@ -1,10 +1,10 @@
 # SuperLig-Database-in-C
 In this project, I implemented a database system which allow users to manage team, player and statistical records in the SuperLig. Users can run queries to extract high level information from the database.
 
-Command >> select 	
-Pattern >> select field1, field2,.. from table_name
-Return  >> Returns field1, field2,… of all records from table_name 
-Use of  >> select team_name from teams
+Command >> select__ 	
+Pattern >> select field1, field2,.. from table_name__
+Return  >> Returns field1, field2,… of all records from table_name__ 
+Use of  >> select team_name from teams__
 
 Command >> where 	
 Pattern >> SELECT_STATEMENT where field_a=y 
