@@ -13,7 +13,7 @@ Use of  >> select colors, stadium from teams where team_name=fenerbahce
 
 Command >> sort 	
 Pattern >> SELECT_STATEMENT sort by field1 asc
-Return  >> Sorts the returned data from select statement by specified field. Sort may be in ascending (asc) or descending (desc) order. 	Use of  >> select team_name, founding_date from teams sort by founding_date asc 
+Return  >> Sorts the returned data from select statement by specified field. Sort may be in ascending (asc) or descending (desc) order. Use of  >> select team_name, founding_date from teams sort by founding_date asc 
 
 Command >> insert
 Pattern >> insert field1, field2,… to table_name
